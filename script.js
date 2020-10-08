@@ -12,10 +12,11 @@ var questions = [
     },
 ];
 
-var questionEl = document.querySelector("#question");
-var optionListEl = document.querySelector("#option-list");
-var questionResultEl = document.querySelector("#question-result");
-var timerEl = document.querySelector("#timer");
+var questionEl = $("#question");
+var optionListEl = $("#option-list");
+var questionResultEl = $("#question-result");
+var timerEl = $("#timer");
+var body = document.body;
 
 var questionIndex = 0;
 var correctCount = 0;
@@ -24,43 +25,41 @@ var intervalId;
 
 function endQuiz() {
     clearInterval(intervalId);
-    var body = document.body;
+
     body.innerHTML = "Game over, You scored " + correctCount;
     setTimeout(showHighScore, 2);
 }
 
-/*
-<div class="input-group mb-3">
-  <div class="input-group-prepend">
-    <span class="input-group-text" id="inputGroup-sizing-default">Default</span>
-  </div>
-  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-</div>
-
-*/
 function showHighScore() {
-    var inputGp = document.createElement("div");
+    var inputGp = $("div");
     inputGp.setAttribute("class", "input-group mb-3");
-    document.body.appendChild(inputGp);
+    body.append(inputGp);
 
-    var prepend = document.createElement("div");
+    var prepend = $("div");
     prepend.setAttribute("class", "input-group-prepend");
-    inputGp.appendChild(prepend);
+    inputGp.append(prepend);
 
-    var inputGpTxt = document.createElement("span");
+    var inputGpTxt = $("span");
     inputGpTxt.setAttribute("class", "input-group-text");
     inputGpTxt.setAttribute("id", "inputGroup-sizing-default");
-    inputGpTxt.textContent = "Enter your initials: ";
-    prepend.appendChild(inputGpTxt);
+    inputGpTxt.text("Enter your initials: ");
+    prepend.append(inputGpTxt);
 
-    var inputBox = document.createElement("input");
+    var inputBox = $("input");
     inputBox.setAttribute("type", "text");
     inputBox.setAttribute("class", "form-control");
-    inputGp.appendChild(inputBox);
+    inputGp.append(inputBox);
 
-    inputBox.addEventListener("input", function (e) {
-        
-    });
+    var btnDiv = $("div");
+    btnDiv.setAttribute("class", "input-group-append");
+    inputGp.append(btnDiv);
+
+    var btnClass = $("button");
+    btnClass.setAttribute("class", "btn btn-outline-secondary");
+    btnClass.setAttribute("type", "button");
+    btnClass.setAttribute("id", "button-addon2");
+    btnClass.text("Submit");
+    btnDiv.append(btnClass);
 
     var high_scores = localStorage.getItem("scores");
 
@@ -78,16 +77,17 @@ function showHighScore() {
         return b.score - a.score;
     });
 
-    var contentUL = document.createElement("ul");
+    var contentUL = $("ul");
+    contentUL.setAttribute("class", "text-center");
 
     for (var i = 0; i < high_scores.length; i++) {
-        var contentLI = document.createElement("li");
-        contentLI.textContent =
-            "Name: " + high_scores[i].name + " Score: " + high_scores[i].score;
-        contentUL.appendChild(contentLI);
+        var contentLI = $("li");
+        contentLI.setAttribute("class", "text-left m-0-auto");
+        contentLI.text("Name: " + high_scores[i].name + " Score: " + high_scores[i].score);
+        contentUL.append(contentLI);
     }
 
-    document.body.appendChild(contentUL);
+    document.body.append(contentUL);
 }
 
 function updateTime() {
@@ -106,7 +106,7 @@ function renderQuestion() {
     }
 
     intervalId = setInterval(updateTime, 1000);
-    questionEl.textContent = questions[questionIndex].question;
+    questionEl.text(questions[questionIndex].question);
 
     optionListEl.innerHTML = "";
     questionResultEl.innerHTML = "";
@@ -115,9 +115,9 @@ function renderQuestion() {
     var choicesLenth = choices.length;
 
     for (var i = 0; i < choicesLenth; i++) {
-        var questionListItem = document.createElement("li");
+        var questionListItem = $("li");
         questionListItem.setAttribute("class", "list-group-item");
-        questionListItem.textContent = choices[i];
+        questionListItem.text(choices[i]);
         optionListEl.append(questionListItem);
     }
 }
