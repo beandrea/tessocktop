@@ -14,7 +14,7 @@ var feedbackEl = document.getElementById("feedback");
 
 function startQuiz() {
     // hide start screen
-    var startScreenEl = document.getElementById("start-screen");
+    var startScreenEl = document.getElementById("start");
     startScreenEl.setAttribute("class", "hide");
 
     // un-hide questions section
@@ -96,11 +96,11 @@ function quizEnd() {
     clearInterval(timerId);
 
     // show end screen
-    var endScreenEl = document.getElementById("end-screen");
+    var endScreenEl = document.getElementById("end");
     endScreenEl.removeAttribute("class");
 
     // show final score
-    var finalScoreEl = document.getElementById("final-score");
+    var finalScoreEl = document.getElementById("final");
     finalScoreEl.textContent = time;
 
     // hide questions section
